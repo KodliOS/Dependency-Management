@@ -1,0 +1,61 @@
+# pod init (terminal üzerinde podfile oluşturmamızı sağlayan komut)
+# pod install (oluşturduğumuz pod dosyasına eklediğimiz podları yüklemek için terminale girdiğimiz komut)
+# pod update (podfile içersinde eklediğimiz ve install etiiğimiz podları güncelleyen komut)
+
+# Podfile dosyalari aslinda bir ruby dosyasidir.
+# Single line commentler '#' ile yazilir
+
+# Multi line commentler '=begin' ile baslar '=end' ile biter
+=begin
+
+=end
+# Fonksiyonlar 'def' ile baslar 'end' ile biter
+
+# 'puts' ile ekrana veri yazdirilir.
+
+# minimum versiyon
+platform :ios, '11.0'
+
+# pod uyarilarini gormemezlikten gel
+inhibit_all_warnings!
+
+# xcworkspace'imizi belirtiriz. mesela projemiz WeatherForecast olsun
+workspace 'WeatherForecast'
+
+# ornek birkac fonksiyon tanimlanmasi
+def service_pods
+  pod 'Alamofire'
+end
+
+def ui_pods
+  pod 'SnapKit'
+  pod 'remitter'
+end
+
+# targetler (workspace içindeki proje ve targetler)
+# target do --- end
+target 'WeatherForecast' do
+  
+  # proje yolu
+  project 'WeatherForecast/WeatherForecast.xcodeproj'
+  
+  # fonksiyonlari calistir
+  ui_pods
+  service_pods
+  
+  # nested target (iç target) orneğin test targeti gibi
+  target 'WeatherForecastTests' do
+    
+    =begin
+    
+    inherit! :complete -> inherit all
+    inherit! :search_paths -> inherit search
+    inherit! :none -> inherit none
+    # detayli bilgi icin https://stackoverflow.com/a/42036181
+    
+    =end
+    
+    inherit! :search_paths
+  end
+end
+
